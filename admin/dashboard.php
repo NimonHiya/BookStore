@@ -17,6 +17,8 @@ $jumlah_pesanan = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM pesanan"));
     <meta charset="UTF-8">
     <title>Dashboard Admin - BookStore</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body class="bg-light">
 
@@ -71,12 +73,37 @@ $jumlah_pesanan = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM pesanan"));
             Manajemen Data
         </div>
         <div class="card-body">
-            <div class="d-flex flex-wrap gap-2">
-                <a href="kategori.php" class="btn btn-outline-primary">📁 Kelola Kategori Buku</a>
-                <a href="buku.php" class="btn btn-outline-primary">📖 Kelola Data Buku</a>
-                <a href="users.php" class="btn btn-outline-primary">👥 Lihat Daftar User</a>
-                <a href="pesanan.php" class="btn btn-outline-primary">🛍️ Lihat Daftar Pesanan</a>
-                <a href="pesan.php" class="btn btn-outline-primary">💬 Lihat Pesan User</a>
+            <div class="row g-3">
+                <div class="col-md-6 col-lg-4">
+                    <a href="kategori.php" class="btn btn-outline-primary w-100">
+                        <i class="bi bi-tags"></i> Kelola Kategori Buku
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <a href="buku.php" class="btn btn-outline-primary w-100">
+                        <i class="bi bi-book"></i> Daftar Buku
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <a href="tambah_buku.php" class="btn btn-outline-success w-100">
+                        <i class="bi bi-plus-circle"></i> Tambah Buku Baru
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <a href="users.php" class="btn btn-outline-primary w-100">
+                        <i class="bi bi-people"></i> Daftar User
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <a href="pesanan.php" class="btn btn-outline-primary w-100">
+                        <i class="bi bi-cart"></i> Daftar Pesanan
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <a href="pesan.php" class="btn btn-outline-primary w-100">
+                        <i class="bi bi-chat"></i> Pesan User
+                    </a>
+                </div>
             </div>
         </div>
     </div>
