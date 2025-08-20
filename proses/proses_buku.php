@@ -95,17 +95,38 @@ if (isset($_GET['hapus'])) {
         exit();
     }
     
+    // Cek apakah ada pesanan yang masih aktif (belum bayar, dibayar, diproses) yang mengandung buku ini
+    $check_active_orders = mysqli_query($conn, "
+        SELECT COUNT(*) as count 
+        FROM detail_pesanan dp 
+        JOIN pesanan p ON dp.pesanan_id = p.id 
+        WHERE dp.buku_id = $id 
+        AND p.status IN ('belum bayar', 'dibayar', 'diproses')
+    ");
+    $active_orders = mysqli_fetch_assoc($check_active_orders);
+    
+    if ($active_orders['count'] > 0) {
+        echo "<script>
+            alert('Buku \"" . addslashes($data['judul']) . "\" tidak dapat dihapus!\\nMasih ada pesanan aktif yang mengandung buku ini. Selesaikan pesanan terlebih dahulu.');
+            window.location.href = '../admin/buku.php';
+        </script>";
+        exit();
+    }
+    
+    // Hapus detail pesanan yang terkait dengan buku ini terlebih dahulu
+    $delete_details = mysqli_query($conn, "DELETE FROM detail_pesanan WHERE buku_id = $id");
+    
     // Hapus file gambar jika ada
     if (!empty($data['gambar']) && file_exists("../assets/img/" . $data['gambar'])) {
         unlink("../assets/img/" . $data['gambar']);
     }
     
-    // Hapus data dari database
+    // Hapus data buku dari database
     $result = mysqli_query($conn, "DELETE FROM buku WHERE id=$id");
     
     if ($result) {
         echo "<script>
-            alert('Buku \"" . addslashes($data['judul']) . "\" berhasil dihapus!');
+            alert('Buku \"" . addslashes($data['judul']) . "\" dan semua data terkait berhasil dihapus!');
             window.location.href = '../admin/buku.php';
         </script>";
     } else {

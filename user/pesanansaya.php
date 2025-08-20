@@ -51,10 +51,20 @@ $pesanan = mysqli_query($conn, "SELECT * FROM pesanan WHERE user_id = $user_id O
                                 </span>
                             </p>
                         </div>
-                        <div>
+                        <div class="d-flex gap-2">
+                            <!-- Tombol Lihat Struk untuk pesanan yang sudah dibayar -->
                             <?php if (in_array(strtolower($p['status']), ['dibayar', 'diproses', 'selesai'])): ?>
                                 <a href="struk.php?id=<?= $p['id'] ?>" class="btn btn-primary btn-sm" target="_blank">
                                     <i class="bi bi-receipt"></i> Lihat Struk
+                                </a>
+                            <?php endif; ?>
+                            
+                            <!-- Tombol Selesai untuk pesanan yang sedang diproses -->
+                            <?php if (strtolower($p['status']) == 'diproses'): ?>
+                                <a href="../proses/selesai_pesanan.php?selesai=<?= $p['id'] ?>&redirect=index.php" 
+                                   class="btn btn-success btn-sm" 
+                                   onclick="return confirm('Konfirmasi pesanan selesai?\\n\\nApakah Anda sudah menerima semua buku dalam pesanan ini?')">
+                                    <i class="bi bi-check-circle"></i> Selesai
                                 </a>
                             <?php endif; ?>
                         </div>
