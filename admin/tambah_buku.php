@@ -8,6 +8,9 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
     exit;
 }
 
+// Ambil kategori yang dipilih dari URL (jika ada)
+$selected_kategori = isset($_GET['kategori']) ? intval($_GET['kategori']) : 0;
+
 // Ambil semua kategori untuk dropdown
 $kategori = mysqli_query($conn, "SELECT * FROM kategori ORDER BY nama_kategori");
 ?>
@@ -254,7 +257,7 @@ $kategori = mysqli_query($conn, "SELECT * FROM kategori ORDER BY nama_kategori")
                                     <select name="kategori" class="form-select" required>
                                         <option value="">-- Pilih Kategori --</option>
                                         <?php while ($k = mysqli_fetch_assoc($kategori)): ?>
-                                            <option value="<?= $k['id'] ?>">
+                                            <option value="<?= $k['id'] ?>" <?= $k['id'] == $selected_kategori ? 'selected' : '' ?>>
                                                 <?= htmlspecialchars($k['nama_kategori']) ?>
                                             </option>
                                         <?php endwhile; ?>
